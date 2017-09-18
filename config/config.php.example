@@ -1,0 +1,17 @@
+<?php
+$config = [
+	'settings' => [
+		'determineRouteBeforeAppMiddleware' => false,
+		'displayErrorDetails' => true,
+		'db' => [
+			'driver' => '',
+			'host' => '',
+			'database' => '',
+			'username' => '',
+			'password' => '',
+			'charset' => '',
+			'collation' => '',
+			'prefix' => ''
+		]
+	]
+];

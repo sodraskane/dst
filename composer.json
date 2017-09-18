@@ -1,0 +1,17 @@
+{
+    "name": "sodraskane/dst",
+    "description": "Södra Skånes scoutdistrikts elektroniska talarlista",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johan Holmberg",
+            "email": "johan@idioti.se"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "slim/slim": "^3.8",
+        "illuminate/database": "^5.5",
+        "slim/twig-view": "^2.2"
+    }
+}
