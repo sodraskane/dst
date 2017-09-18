@@ -1,5 +1,6 @@
 body {
 	font-family: Verdana;
+	margin-left: 10em;
 }
 
 div#new_speaker {
@@ -9,8 +10,21 @@ div#new_speaker {
 	margin-left: 30px;
 }
 
-div#list {
-	margin-left: 30px;
+#list th,
+#list td {
+	text-align: left;
+}
+
+.id_column {
+	width: 6em;
+}
+
+.name_column {
+	width: 16em;
+}
+
+.group_column {
+	width: 8em;
 }
 
 input {

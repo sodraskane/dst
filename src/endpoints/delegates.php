@@ -1,13 +1,39 @@
 <?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
 /*
  * List all delgates
  */
 $app->get('/api/delegates', function (Request $request, Response $response) {
-    $output = "This is where we will list all the delegates";
-    $response->getBody()->write($output);
+    $delegates = [
+        [
+            'id' => '42',
+            'name' => 'Johan Holmberg',
+            'group' => 'Månstorp'
+        ],
+        [
+            'id' => '13',
+            'name' => 'Håkan Kvist',
+            'group' => 'Drottningstaden'
+        ]
+    ];
 
-    return $response;
+    if ($request->getHeader('Accept')[0] == 'application/json') {
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($delegates, JSON_UNESCAPED_UNICODE));
+    } else {
+        return $this->view->render($response, 'list.twig', [
+            'items' => $delegates,
+            'title' => 'delegates'
+        ]);
+
+        $output = "This is where we will list all the delegates";
+        $response->getBody()->write($output);
+
+        return $response;
+    }
 });
 
 /*

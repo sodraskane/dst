@@ -2,11 +2,11 @@
 <html>
   <head>
     <title>Södra Skånes distriktsstämma</title>
-    <link rel='stylesheet' href='/static/css/style.css' />
+    <link rel="stylesheet" href="/static/css/style.css" />
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
   </head>
   <body>
-    <h1>Talarlista</h1>
+    <h1>{{ title }}</h1>
     <table>
       <tr>
         <th>Delegat</th>
@@ -14,11 +14,11 @@
         <th>Scoutkår</th>
         <th>&nbsp;</th>
       </tr>
-      {% for speaker in speakers %}
+      {% for item in items %}
       <tr>
-        <td>{{ speaker.id }}</td>
-        <td>{{ speaker.name }}</td>
-        <td>{{ speaker.group }}</td>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.group }}</td>
         <td>&nbsp;</td>
       </tr>
       {% endfor %}

@@ -16,23 +16,19 @@ require 'dependencies.php';
  * This is where the enpdoints live
  */
 
+// Gets the main application interface
 $app->get('/', function (Request $request, Response $response) {
-    $speakers = [
-        [
-            'id' => '42',
-            'name' => 'Johan Holmberg',
-            'group' => 'Månstorp'
-        ],
-        [
-            'id' => '13',
-            'name' => 'Håkan Kvist',
-            'group' => 'Drottningstaden'
-        ]
-    ];
+    return $this->view->render($response, 'index.twig', []);
+});
 
-    return $this->view->render($response, 'list.twig', [
-        'speakers' => $speakers
-    ]);
+// The login endpoint
+$app->get('/login', function (Request $request, Response $response) {
+    return $this->view->render($response, 'index.twig', []);
+});
+
+// The edit endpoint
+$app->get('/edit', function (Request $request, Response $response) {
+    return $this->view->render($response, 'index.twig', []);
 });
 
 $app->get('/api', function (Request $request, Response $response) {

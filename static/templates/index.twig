@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Södra Skånes distriktsstämma</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+$(function() {
+  $.get({
+    url: "/api/speakers",
+    headers: {
+        "Accept": "application/json"
+    },
+    success: function(result) {
+        html = '';
+        for (row in result) {
+            html += '<tr><td class="id_column">' + result[row].id +
+                 '</td><td class="name_column">' + result[row].name +
+                 '</td><td class="group_column">' + result[row].group +
+                 '</td><td class="control_column"></td></tr>';
+        }
+        $('#list > tbody').html(html);
+    }
+  });
+});
+    </script>
+  </head>
+  <body>
+    <h1>Talarlista</h1>
+    <table id="list">
+      <thead>
+        <tr>
+          <th class="id_column">Delegat</th>
+          <th class="name_column">Namn</th>
+          <th class="group_column">Scoutkår</th>
+          <th class="control_column">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </body>
+</html>
