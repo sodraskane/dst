@@ -6,7 +6,7 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-$(function() {
+var updateList = function() {
   $.get({
     url: "/api/speakers",
     headers: {
@@ -23,6 +23,11 @@ $(function() {
         $('#list > tbody').html(html);
     }
   });
+  setTimeout(updateList, 1000);
+};
+
+$(function() {
+  updateList();
 });
     </script>
   </head>
