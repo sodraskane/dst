@@ -15,7 +15,8 @@ var updateList = function() {
     success: function(result) {
         html = '';
         for (row in result) {
-            html += '<tr><td class="id_column">' + result[row].id +
+console.log(row);
+            html += '<tr><td class="id_column">' + result[row].delegate +
                  '</td><td class="name_column">' + result[row].name +
                  '</td><td class="group_column">' + result[row].group +
                  '</td><td class="control_column"></td></tr>';

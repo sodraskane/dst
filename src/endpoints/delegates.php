@@ -8,12 +8,12 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $app->get('/api/delegates', function (Request $request, Response $response) {
     $delegates = [
         [
-            'id' => '42',
+            'delegate' => '42',
             'name' => 'Johan Holmberg',
             'group' => 'Månstorp'
         ],
         [
-            'id' => '13',
+            'delegate' => '13',
             'name' => 'Håkan Kvist',
             'group' => 'Drottningstaden'
         ]
