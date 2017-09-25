@@ -7,13 +7,13 @@ use \Psr\Http\Message\ResponseInterface as Response;
  */
 $app->get('/api/speakers', function (Request $request, Response $response) {
     $speakers = [
-        '3' => [
-            'id' => '42',
+        '17' => [
+            'delegate' => '42',
             'name' => 'Johan Holmberg',
             'group' => 'Månstorp'
         ],
-        '4' => [
-            'id' => '13',
+        '18' => [
+            'delegate' => '13',
             'name' => 'Håkan Kvist',
             'group' => 'Drottningstaden'
         ]
@@ -40,8 +40,13 @@ $app->get('/api/speakers', function (Request $request, Response $response) {
  * Add a speaker
  */
 $app->post('/api/speakers', function (Request $request, Response $response) {
-    $output = "This is where we will add a speaker";
-    $response->getBody()->write($output);
+    $output = [
+            'speaker' => '17',
+            'delegate' => '42'
+        ];
+    $response->getBody()->write($output)
+            ->withStatus(201)
+            ->withHeader('Location:', '/api/speakers/17');
 
     return $response;
 });
@@ -49,8 +54,13 @@ $app->post('/api/speakers', function (Request $request, Response $response) {
 /*
  * Retrieve a single speaker
  */
-$app->get('/api/speakers/{id}', function (Request $request, Response $response) {
-    $output = "This is where we will retrieve a speaker";
+$app->get('/api/speakers/{speaker}', function (Request $request, Response $response) {
+    $output = [
+            'speaker' => $speaker,
+            'delegate' => '42',
+            'name' => 'Johan Holmberg',
+            'group' => 'Månstorp'
+        ];
     $response->getBody()->write($output);
 
     return $response;
@@ -59,9 +69,8 @@ $app->get('/api/speakers/{id}', function (Request $request, Response $response) 
 /*
  * Update a speaker
  */
-$app->put('/api/speakers/{id}', function (Request $request, Response $response) {
-    $output = "This is where we will update a speaker";
-    $response->getBody()->write($output);
+$app->put('/api/speakers/{speaker}', function (Request $request, Response $response) {
+    $response->withStatus(204);
 
     return $response;
 });
@@ -69,9 +78,8 @@ $app->put('/api/speakers/{id}', function (Request $request, Response $response) 
 /*
  * Update a speaker
  */
-$app->patch('/api/speakers/{id}', function (Request $request, Response $response) {
-    $output = "This is where we will list update/patch a speaker";
-    $response->getBody()->write($output);
+$app->patch('/api/speakers/{speaker}', function (Request $request, Response $response) {
+    $response->withStatus(204);
 
     return $response;
 });
@@ -79,9 +87,8 @@ $app->patch('/api/speakers/{id}', function (Request $request, Response $response
 /*
  * Delete a speaker
  */
-$app->delete('/api/speakers/{id}', function (Request $request, Response $response) {
-    $output = "This is where we will delete a speaker";
-    $response->getBody()->write($output);
+$app->delete('/api/speakers/{speaker}', function (Request $request, Response $response) {
+    $response->withStatus(204);
 
     return $response;
 });

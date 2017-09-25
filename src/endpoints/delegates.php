@@ -40,8 +40,14 @@ $app->get('/api/delegates', function (Request $request, Response $response) {
  * Add a delegate
  */
 $app->post('/api/delegates', function (Request $request, Response $response) {
-    $output = "This is where we will add a delegate";
-    $response->getBody()->write($output);
+    $output = [
+            'delegate' => '42',
+            'name' => 'Johan Holmberg',
+            'group' => 'Månstorp'
+        ];
+    $response->getBody()->write($output)
+            ->withStatus(201)
+            ->withHeader('Location:', '/api/delegates/42');
 
     return $response;
 });
@@ -49,8 +55,12 @@ $app->post('/api/delegates', function (Request $request, Response $response) {
 /*
  * Retrieve a single delegate
  */
-$app->get('/api/delegates/{id}', function (Request $request, Response $response) {
-    $output = "This is where we will retrieve a delegate";
+$app->get('/api/delegates/{delegate}', function (Request $request, Response $response) {
+    $output = [
+            'delegate' => $delegate,
+            'name' => 'Johan Holmberg',
+            'group' => 'Månstorp'
+        ];
     $response->getBody()->write($output);
 
     return $response;
@@ -59,9 +69,8 @@ $app->get('/api/delegates/{id}', function (Request $request, Response $response)
 /*
  * Update a delegate
  */
-$app->put('/api/delegates/{id}', function (Request $request, Response $response) {
-    $output = "This is where we will update a delegate";
-    $response->getBody()->write($output);
+$app->put('/api/delegates/{delegate}', function (Request $request, Response $response) {
+    $response->withStatus(204);
 
     return $response;
 });
@@ -69,9 +78,8 @@ $app->put('/api/delegates/{id}', function (Request $request, Response $response)
 /*
  * Update a delegate
  */
-$app->patch('/api/delegates/{id}', function (Request $request, Response $response) {
-    $output = "This is where we will list update/patch a delegate";
-    $response->getBody()->write($output);
+$app->patch('/api/delegates/{delegate}', function (Request $request, Response $response) {
+    $response->withStatus(204);
 
     return $response;
 });
@@ -79,9 +87,8 @@ $app->patch('/api/delegates/{id}', function (Request $request, Response $respons
 /*
  * Delete a delegate
  */
-$app->delete('/api/delegates/{id}', function (Request $request, Response $response) {
-    $output = "This is where we will delete a delegate";
-    $response->getBody()->write($output);
+$app->delete('/api/delegates/{delegate}', function (Request $request, Response $response) {
+    $response->withStatus(204);
 
     return $response;
 });

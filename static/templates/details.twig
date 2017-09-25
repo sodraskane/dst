@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Södra Skånes distriktsstämma</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  </head>
+  <body>
+    <h1>{{ title }}</h1>
+    <table>
+      <tr>
+        <th>Delegat</th>
+        <th>Namn</th>
+        <th>Scoutkår</th>
+        <th>&nbsp;</th>
+      </tr>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.group }}</td>
+        <td>&nbsp;</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
