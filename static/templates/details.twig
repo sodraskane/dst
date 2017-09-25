@@ -19,7 +19,11 @@
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.group }}</td>
+        {% if logged_in %}
+        <td><a href="#">Ändra</a> | <a href="#">Ta bort</a></td>
+        {% else %}
         <td>&nbsp;</td>
+        {% endif %}
       </tr>
       {% endfor %}
     </table>
