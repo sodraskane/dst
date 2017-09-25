@@ -18,17 +18,34 @@ require 'dependencies.php';
 
 // Gets the main application interface
 $app->get('/', function (Request $request, Response $response) {
-    return $this->view->render($response, 'index.twig', []);
+    $logged_in = true;
+
+    return $this->view->render($response, 'index.twig', [
+                'logged_in' => $logged_in
+            ]);
 });
 
 // The login endpoint
 $app->get('/login', function (Request $request, Response $response) {
-    return $this->view->render($response, 'index.twig', []);
+    return $this->view->render($response, 'login.twig', []);
 });
 
 // The edit endpoint
 $app->get('/edit', function (Request $request, Response $response) {
-    return $this->view->render($response, 'index.twig', []);
+    $logged_in = true;
+ 
+    return $this->view->render($response, 'list.twig', [
+                'logged_in' => $logged_in
+            ]);
+});
+
+// The edit endpoint
+$app->get('/edit/{delegate}', function (Request $request, Response $response) {
+    $logged_in = true;
+
+    return $this->view->render($response, 'details.twig', [
+                'logged_in' => $logged_in
+            ]);
 });
 
 $app->get('/api', function (Request $request, Response $response) {
@@ -38,7 +55,7 @@ $app->get('/api', function (Request $request, Response $response) {
     return $response;
 });
 
-// Import the two main endpoints
+// Import the API endpoints
 require 'endpoints/delegates.php';
 require 'endpoints/speakers.php';
 
