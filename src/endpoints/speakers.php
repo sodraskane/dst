@@ -40,11 +40,11 @@ $app->get('/api/speakers', function (Request $request, Response $response) {
  * Add a speaker
  */
 $app->post('/api/speakers', function (Request $request, Response $response) {
-    $output = [
+    $speaker = [
             'speaker' => '17',
             'delegate' => '42'
         ];
-    $response->getBody()->write($output)
+    $response->getBody()->write(json_encode($speaker, JSON_UNESCAPED_UNICODE))
             ->withStatus(201)
             ->withHeader('Location:', '/api/speakers/17');
 
@@ -54,14 +54,14 @@ $app->post('/api/speakers', function (Request $request, Response $response) {
 /*
  * Retrieve a single speaker
  */
-$app->get('/api/speakers/{speaker}', function (Request $request, Response $response) {
-    $output = [
-            'speaker' => $speaker,
+$app->get('/api/speakers/{speaker}', function (Request $request, Response $response, $args) {
+    $speaker = [
+            'speaker' => $args['speaker'],
             'delegate' => '42',
             'name' => 'Johan Holmberg',
             'group' => 'Månstorp'
         ];
-    $response->getBody()->write($output);
+    $response->getBody()->write(json_encode($speaker, JSON_UNESCAPED_UNICODE));
 
     return $response;
 });
@@ -69,7 +69,7 @@ $app->get('/api/speakers/{speaker}', function (Request $request, Response $respo
 /*
  * Update a speaker
  */
-$app->put('/api/speakers/{speaker}', function (Request $request, Response $response) {
+$app->put('/api/speakers/{speaker}', function (Request $request, Response $response, $args) {
     $response->withStatus(204);
 
     return $response;
@@ -78,7 +78,7 @@ $app->put('/api/speakers/{speaker}', function (Request $request, Response $respo
 /*
  * Update a speaker
  */
-$app->patch('/api/speakers/{speaker}', function (Request $request, Response $response) {
+$app->patch('/api/speakers/{speaker}', function (Request $request, Response $response, $args) {
     $response->withStatus(204);
 
     return $response;
@@ -87,7 +87,7 @@ $app->patch('/api/speakers/{speaker}', function (Request $request, Response $res
 /*
  * Delete a speaker
  */
-$app->delete('/api/speakers/{speaker}', function (Request $request, Response $response) {
+$app->delete('/api/speakers/{speaker}', function (Request $request, Response $response, $args) {
     $response->withStatus(204);
 
     return $response;
