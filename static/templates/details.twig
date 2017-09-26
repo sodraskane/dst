@@ -4,28 +4,85 @@
     <title>Södra Skånes distriktsstämma</title>
     <link rel="stylesheet" href="/static/css/style.css" />
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+var updateForm = function(delegate) {
+  $.get({
+    url: "/api/delegates/" + delegate,
+    headers: {
+      "Accept": "application/json"
+    },
+    success: function(result) {
+      var delegate = JSON.parse(result);
+{% if logged_in %}
+      $('#delegate').val(delegate.delegate);
+      $('#name').val(delegate.name);
+      $('#group').val(delegate.group);
+{% else %}
+      $('#delegate').html(delegate.delegate);
+      $('#name').html(delegate.name);
+      $('#group').html(delegate.group);
+{% endif %}
+    }
+  });
+};
+
+{% if logged_in %}
+var updateSpeaker = function() {
+  var delegate = {};
+  delegate.delegate = $('#delegate').val();
+  delegate.name = $('#name').val();
+  delegate.group = $('#group').val();
+
+  $.ajax({
+    method: "put",
+    url: "/api/delegates/" + delegate.delegate,
+    data: JSON.stringify(delegate),
+    headers: {
+      "Accept": "application/json"
+    },
+    success: function() {
+      window.location = '/';
+    }
+  });
+};
+{% endif %}
+
+$(function() {
+  updateForm({{ delegate }});
+  $('#updateButton').click(updateSpeaker);
+});
+    </script>
   </head>
   <body>
-    <h1>{{ title }}</h1>
+{% if logged_in %}
+    <h1>Förändra delegat</h1>
+    <form>
+      <label for="delegate">Delegatnummer: </label>
+      <input type="text" id="delegate" name="delegate"><br>
+      <label for="name">Namn: </label>
+      <input type="text" id="name" name="name"><br>
+      <label for="group">Scoutkår: </label>
+      <input type="text" id="group" name="group"><br>
+      <input type="button" id="updateButton" value="Uppdatera delegat">
+    </form>
+{% else %}
+    <h1>Information om delegat</h1>
     <table>
       <tr>
-        <th>Delegat</th>
-        <th>Namn</th>
-        <th>Scoutkår</th>
-        <th>&nbsp;</th>
+        <td>Delegatnummer:</td>
+        <td id="delegate"></td>
       </tr>
-      {% for item in items %}
       <tr>
-        <td>{{ item.id }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.group }}</td>
-        {% if logged_in %}
-        <td><a href="#">Ändra</a> | <a href="#">Ta bort</a></td>
-        {% else %}
-        <td>&nbsp;</td>
-        {% endif %}
+        <td>Namn:</td>
+        <td id="name"></td>
       </tr>
-      {% endfor %}
+      <tr>
+        <td>Scoutkår:</td>
+        <td id="group"></td>
+      </tr>
     </table>
+    <a href="/">Tillbaka till talarlistan</a>
+{% endif %}
   </body>
 </html>

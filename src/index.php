@@ -40,11 +40,12 @@ $app->get('/edit', function (Request $request, Response $response) {
 });
 
 // The edit endpoint
-$app->get('/edit/{delegate}', function (Request $request, Response $response) {
+$app->get('/edit/{delegate}', function (Request $request, Response $response, $args) {
     $logged_in = true;
 
     return $this->view->render($response, 'details.twig', [
-                'logged_in' => $logged_in
+                'logged_in' => $logged_in,
+                'delegate' => $args['delegate']
             ]);
 });
 
