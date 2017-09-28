@@ -16,32 +16,32 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Databas: `dst`
+-- Database: `dst`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur för tabell `deltagare`
+-- Structure for table `delegates`
 --
 
-DROP TABLE IF EXISTS `deltagare`;
-CREATE TABLE `deltagare` (
-  `id` int(11) NOT NULL auto_increment,
-  `namn` varchar(64) character set utf8 collate utf8_bin default NULL,
-  `kar` varchar(64) character set utf8 collate utf8_bin default NULL,
-  PRIMARY KEY  (`id`)
+DROP TABLE IF EXISTS `delegates`;
+CREATE TABLE `delegates` (
+  `delegate` int(11) NOT NULL auto_increment,
+  `name` varchar(64) character set utf8 collate utf8_bin default NULL,
+  `group` varchar(64) character set utf8 collate utf8_bin default NULL,
+  PRIMARY KEY  (`delegate`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=431 ;
 
 -- --------------------------------------------------------
 
 --
--- Struktur för tabell `talarlista`
+-- Structure for table `speakers`
 --
 
-DROP TABLE IF EXISTS `talarlista`;
-CREATE TABLE `talarlista` (
-  `plats` int(11) NOT NULL auto_increment,
-  `talare` int(11) NOT NULL,
-  PRIMARY KEY  (`plats`)
+DROP TABLE IF EXISTS `speakers`;
+CREATE TABLE `speakers` (
+  `speaker` int(11) NOT NULL auto_increment,
+  `delegate` int(11) NOT NULL,
+  PRIMARY KEY  (`speaker`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=2 ;

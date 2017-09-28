@@ -5,6 +5,10 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require '../vendor/autoload.php';
 require '../config/config.php';
 
+// Import the models
+require 'models/delegate.php';
+require 'models/speaker.php';
+
 // Create the web applicatoin
 $app = new \Slim\App($config);
 

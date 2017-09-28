@@ -6,63 +6,36 @@ use \Psr\Http\Message\ResponseInterface as Response;
  * List all delgates
  */
 $app->get('/api/delegates', function (Request $request, Response $response) {
-    $delegates = [
-        [
-            'delegate' => '42',
-            'name' => 'Johan Holmberg',
-            'group' => 'Månstorp'
-        ],
-        [
-            'delegate' => '13',
-            'name' => 'Håkan Kvist',
-            'group' => 'Drottningstaden'
-        ]
-    ];
-
-    if ($request->getHeader('Accept')[0] == 'application/json') {
-        return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->write(json_encode($delegates, JSON_UNESCAPED_UNICODE));
-    } else {
-        return $this->view->render($response, 'list.twig', [
-            'items' => $delegates,
-            'title' => 'delegates'
-        ]);
-
-        $output = "This is where we will list all the delegates";
-        $response->getBody()->write($output);
-
-        return $response;
-    }
+    $delegates = Delegate::all();
+    return $response->withJson($delegates);
 });
 
 /*
  * Add a delegate
  */
 $app->post('/api/delegates', function (Request $request, Response $response) {
-    $delegate = [
-            'delegate' => '42',
-            'name' => 'Johan Holmberg',
-            'group' => 'Månstorp'
-        ];
-    $response->getBody()->write(json_encode($delegate, JSON_UNESCAPED_UNICODE))
-            ->withStatus(201)
-            ->withHeader('Location:', '/api/delegates/42');
+    $data = $request->getParsedBody();
+    $delegate = new Delegate();
+    $delegate->name = $data['name'];
+    $delegate->group = $data['group'];
 
-    return $response;
+    $delegate->save();
+
+    return $response->withJson($delegate)
+            ->withStatus(201)
+            ->withHeader('Location:', '/api/delegates/' + $delegate->delegate);
 });
 
 /*
  * Retrieve a single delegate
  */
 $app->get('/api/delegates/{delegate}', function (Request $request, Response $response, $args) {
-    $delegate = [
-            'delegate' => $args['delegate'],
-            'name' => 'Johan Holmberg',
-            'group' => 'Månstorp'
-        ];
-    $response->getBody()->write(json_encode($delegate, JSON_UNESCAPED_UNICODE));
-
+    $delegate = Delegate::find($args['delegate']);
+    if ($delegate != null) {
+        $response = $response->withJson($delegate);
+    } else {
+        $response = $response->withStatus(404);
+    }
     return $response;
 });
 
@@ -70,25 +43,28 @@ $app->get('/api/delegates/{delegate}', function (Request $request, Response $res
  * Update a delegate
  */
 $app->put('/api/delegates/{delegate}', function (Request $request, Response $response, $args) {
-    $response->withStatus(204);
+    $data = $request->getParsedBody();
+    $delegate = Delegate::find($args['delegate']);
+    if (!$delegate) {
+        return $response->withStatus(404);
+    }
+    $delegate->delegate = $data['delegate'] ?: $delegate->delegate;
+    $delegate->name = $data['name'] ?: $delegate->name;
+    $delegate->group = $data['group'] ?: $delegate->group;
 
-    return $response;
-});
+    $delegate->save();
 
-/*
- * Update a delegate
- */
-$app->patch('/api/delegates/{delegate}', function (Request $request, Response $response, $args) {
-    $response->withStatus(204);
-
-    return $response;
+    return $response->withStatus(204);
 });
 
 /*
  * Delete a delegate
  */
 $app->delete('/api/delegates/{delegate}', function (Request $request, Response $response, $args) {
-    $response->withStatus(204);
+    $delegate = Delegate::find($args['delegate']);
+    if ($delegate) {
+         $delegate->delete();
+    }
 
-    return $response;
+    return $response->withStatus(204);
 });
