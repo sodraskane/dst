@@ -20,11 +20,11 @@ div#new_speaker {
 }
 
 .name_column {
-	width: 16em;
+	width: 14em;
 }
 
 .group_column {
-	width: 8em;
+	width: 12em;
 }
 
 input {
