@@ -31,7 +31,7 @@ CREATE TABLE `delegates` (
   `name` varchar(64) character set utf8 collate utf8_bin default NULL,
   `group` varchar(64) character set utf8 collate utf8_bin default NULL,
   PRIMARY KEY  (`delegate`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=431 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -43,5 +43,6 @@ DROP TABLE IF EXISTS `speakers`;
 CREATE TABLE `speakers` (
   `speaker` int(11) NOT NULL auto_increment,
   `delegate` int(11) NOT NULL,
-  PRIMARY KEY  (`speaker`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=2 ;
+  PRIMARY KEY  (`speaker`),
+  FOREIGN KEY (delegate) REFERENCES delegates(delegate)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=1;

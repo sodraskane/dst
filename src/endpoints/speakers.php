@@ -7,6 +7,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
  */
 $app->get('/api/speakers', function (Request $request, Response $response) {
     $speakers = Speaker::all();
+    foreach ($speakers as $speaker) {
+         $speaker->delegate = Delegate::find($speaker->delegate);
+    }
     return $response->withJson($speakers);
 });
 
@@ -31,6 +34,7 @@ $app->post('/api/speakers', function (Request $request, Response $response) {
 $app->get('/api/speakers/{speaker}', function (Request $request, Response $response, $args) {
     $speaker = Speaker::find($args['speaker']);
     if ($speaker != null) {
+        $speaker->delegate = Delegate::find($speaker->delegate);
         $response = $response->withJson($speaker);
     } else {
         $response = $response->withStatus(404);

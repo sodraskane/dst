@@ -6,6 +6,6 @@ class Speaker extends \Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
 
     public function delegate() {
-        return $this->hasOne('Delegate', 'delegate');
+        return $this->belongsTo('Delegate', 'delegate');
     }
 }
