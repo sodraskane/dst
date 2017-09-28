@@ -13,15 +13,14 @@ var updateForm = function(delegate) {
       "Accept": "application/json"
     },
     success: function(result) {
-      var delegate = JSON.parse(result);
 {% if logged_in %}
-      $('#delegate').val(delegate.delegate);
-      $('#name').val(delegate.name);
-      $('#group').val(delegate.group);
+      $('#delegate').val(result.delegate);
+      $('#name').val(result.name);
+      $('#group').val(result.group);
 {% else %}
-      $('#delegate').html(delegate.delegate);
-      $('#name').html(delegate.name);
-      $('#group').html(delegate.group);
+      $('#delegate').html(result.delegate);
+      $('#name').html(result.name);
+      $('#group').html(result.group);
 {% endif %}
     }
   });
@@ -35,13 +34,14 @@ var updateSpeaker = function() {
   delegate.group = $('#group').val();
 
   $.ajax({
-    method: "put",
+    type: "put",
     url: "/api/delegates/" + delegate.delegate,
     data: JSON.stringify(delegate),
     headers: {
-      "Accept": "application/json"
+      "Accept": "application/json",
+      "Content-Type": "application/json"
     },
-    success: function() {
+    success: function(data) {
       window.location = '/';
     }
   });

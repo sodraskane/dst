@@ -6,7 +6,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
  * List all delgates
  */
 $app->get('/api/delegates', function (Request $request, Response $response) {
-    $delegates = Delegate::all();
+    $delegates = Delegate::orderBy('delegate', 'asc')->get();
     return $response->withJson($delegates);
 });
 

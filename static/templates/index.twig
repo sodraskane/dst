@@ -16,14 +16,14 @@ var updateList = function() {
     success: function(result) {
       html = '';
       for (row in result) {
-        html += '<tr><td class="id_column">' + result[row].delegate +
-            '</td><td class="name_column">' + result[row].name +
-            '</td><td class="group_column">' + result[row].group +
+        html += '<tr><td class="id_column">' + result[row].delegate.delegate +
+            '</td><td class="name_column">' + result[row].delegate.name +
+            '</td><td class="group_column">' + result[row].delegate.group +
             '</td><td class="control_column">';
         if (logged_in) {
-          html += '<a href="/edit/' + result[row].delegate +
+          html += '<a href="/edit/' + result[row].delegate.delegate +
               '">Ändra</a> | <a href="javascript:removeSpeaker(' +
-              result[row].delegate + ')">Ta bort</a>';
+              result[row].speaker + ')">Ta bort</a>';
         }
         html += '</td></tr>';
       }
