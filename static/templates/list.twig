@@ -4,9 +4,31 @@
     <title>Södra Skånes distriktsstämma</title>
     <link rel="stylesheet" href="/static/css/style.css" />
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+{% if logged_in %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+var updateDelegate = function(id) {
+  var delegate = {};
+  delegate.id = parseInt($('#delegate_' + id + '_id').val());
+  delegate.name = $('#delegate_' + id + '_name').val();
+  delegate.group = $('#delegate_' + id + '_group').val();
+
+  $.ajax({
+    method: "PUT",
+    url: "/api/delegates/" + delegate.id,
+    data: JSON.stringify(delegate),
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }
+  });
+}
+    </script>
+{% endif %}
   </head>
   <body>
     <h1>Alla delegater</h1>
+    <p><a href="/">Till talarlistan</a></p>
     <table>
       <thead>
         <tr>
@@ -18,14 +40,16 @@
       </thead>
       <tbody>
 {% if logged_in %}
+        <form id="delegates" name="delegates">
       {% for delegate in delegates %}
-        <tr>
-          <td>{{ delegate.id }}</td>
-          <td>{{ delegate.name }}</td>
-          <td>{{ delegate.group }}</td>
-          <td>&nbsp;</td>
-        </tr>
+          <tr>
+            <td><input type="text" id="delegate_{{ delegate.id }}_id" name="delegate_{{ delegate.id }}_id" value="{{ delegate.id }}" class="short"></td>
+            <td><input type="text" id="delegate_{{ delegate.id }}_name" name="delegate_{{ delegate.id }}_name" value="{{ delegate.name }}"></td>
+            <td><input type="text" id="delegate_{{ delegate.id }}_group" name="delegate_{{ delegate.id }}_group" value="{{ delegate.group }}"></td>
+            <td><input type="button" id="update_{{ delegate.id }}" name="update_{{ delegate.id }}" onclick="updateDelegate({{ delegate.id }})" value="Uppdatera delegat"></td>
+          </tr>
       {% endfor %}
+        </form>
 {% else %}
       {% for item in delegates %}
         <tr>

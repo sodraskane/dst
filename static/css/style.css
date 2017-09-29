@@ -35,3 +35,7 @@ form#details > label {
 input {
 	font-size: 24px;
 }
+
+input.short {
+	width: 4em;
+}

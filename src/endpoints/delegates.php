@@ -48,7 +48,7 @@ $app->put('/api/delegates/{delegate}', function (Request $request, Response $res
     if (!$delegate) {
         return $response->withStatus(404);
     }
-    $delegate->id = $data['delegate'] ?: $delegate->id;
+    $delegate->id = $data['id'] ?: $delegate->id;
     $delegate->name = $data['name'] ?: $delegate->name;
     $delegate->group = $data['group'] ?: $delegate->group;
 

@@ -42,9 +42,12 @@ $app->get('/add', function (Request $request, Response $response) {
 // The edit endpoint
 $app->get('/edit', function (Request $request, Response $response) {
     $logged_in = true;
+
+    $delegates = Delegate::orderBy('id', 'asc')->get();
  
     return $this->view->render($response, 'list.twig', [
-                'logged_in' => $logged_in
+                'logged_in' => $logged_in,
+		'delegates' => $delegates
             ]);
 });
 
