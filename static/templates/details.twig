@@ -14,11 +14,11 @@ var updateForm = function(delegate) {
     },
     success: function(result) {
 {% if logged_in %}
-      $('#delegate').val(result.delegate);
+      $('#delegate').val(result.id);
       $('#name').val(result.name);
       $('#group').val(result.group);
 {% else %}
-      $('#delegate').html(result.delegate);
+      $('#delegate').html(result.id);
       $('#name').html(result.name);
       $('#group').html(result.group);
 {% endif %}
@@ -35,7 +35,7 @@ var updateSpeaker = function() {
 
   $.ajax({
     type: "put",
-    url: "/api/delegates/" + delegate.delegate,
+    url: "/api/delegates/" + delegate.id,
     data: JSON.stringify(delegate),
     headers: {
       "Accept": "application/json",

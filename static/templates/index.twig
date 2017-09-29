@@ -15,12 +15,12 @@ var updateList = function() {
     success: function(result) {
       html = '';
       for (row in result) {
-        html += '<tr><td class="id_column">' + result[row].delegate.delegate +
+        html += '<tr><td class="id_column">' + result[row].delegate.id +
             '</td><td class="name_column">' + result[row].delegate.name +
             '</td><td class="group_column">' + result[row].delegate.group +
             '</td><td class="control_column">';
 {% if logged_in %}
-          html += '<a href="/edit/' + result[row].delegate.delegate +
+          html += '<a href="/edit/' + result[row].delegate.id +
               '">Ändra</a> | <a href="javascript:removeSpeaker(' +
               result[row].speaker + ')">Ta bort</a>';
 {% endif %}

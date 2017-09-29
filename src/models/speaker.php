@@ -1,6 +1,6 @@
 <?php  
 class Speaker extends \Illuminate\Database\Eloquent\Model {
-    protected $primaryKey = 'speaker';
+    protected $primaryKey = 'id';
     protected $table = 'speakers';
     protected $fillable = ['*'];
     public $timestamps = false;

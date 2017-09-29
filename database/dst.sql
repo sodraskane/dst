@@ -27,10 +27,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 DROP TABLE IF EXISTS `delegates`;
 CREATE TABLE `delegates` (
-  `delegate` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) character set utf8 collate utf8_bin default NULL,
   `group` varchar(64) character set utf8 collate utf8_bin default NULL,
-  PRIMARY KEY  (`delegate`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -41,8 +41,8 @@ CREATE TABLE `delegates` (
 
 DROP TABLE IF EXISTS `speakers`;
 CREATE TABLE `speakers` (
-  `speaker` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL auto_increment,
   `delegate` int(11) NOT NULL,
   PRIMARY KEY  (`speaker`),
-  FOREIGN KEY (delegate) REFERENCES delegates(delegate)
+  FOREIGN KEY (delegate) REFERENCES delegates(id)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=1;
