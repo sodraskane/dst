@@ -6,7 +6,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
  * List all delgates
  */
 $app->get('/api/delegates', function (Request $request, Response $response) {
-    $delegates = Delegate::orderBy('delegate', 'asc')->get();
+    $delegates = Delegate::orderBy('id', 'asc')->get();
     return $response->withJson($delegates);
 });
 
@@ -23,7 +23,7 @@ $app->post('/api/delegates', function (Request $request, Response $response) {
 
     return $response->withJson($delegate)
             ->withStatus(201)
-            ->withHeader('Location:', '/api/delegates/' + $delegate->delegate);
+            ->withHeader('Location:', '/api/delegates/' + $delegate->id);
 });
 
 /*
@@ -48,7 +48,7 @@ $app->put('/api/delegates/{delegate}', function (Request $request, Response $res
     if (!$delegate) {
         return $response->withStatus(404);
     }
-    $delegate->delegate = $data['delegate'] ?: $delegate->delegate;
+    $delegate->id = $data['delegate'] ?: $delegate->id;
     $delegate->name = $data['name'] ?: $delegate->name;
     $delegate->group = $data['group'] ?: $delegate->group;
 

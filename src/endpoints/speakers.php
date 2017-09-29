@@ -6,7 +6,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
  * List all delgates
  */
 $app->get('/api/speakers', function (Request $request, Response $response) {
-    $speakers = Speaker::orderBy('speaker', 'asc')->get();
+    $speakers = Speaker::orderBy('id', 'asc')->get();
     foreach ($speakers as $speaker) {
          $speaker->delegate = Delegate::find($speaker->delegate);
     }
@@ -51,8 +51,8 @@ $app->put('/api/speakers/{speaker}', function (Request $request, Response $respo
     if (!$speaker) {
         return $response->withStatus(404);
     }
-    $speaker->speaker = $data['speaker'] ?: $delegate->speaker;
-    $speaker->delegate = $data['delegate'] ?: $delegate->delegate;
+    $speaker->id = $data['id'] ?: $speaker->id;
+    $speaker->delegate = $data['delegate'] ?: $speaker->delegate;
 
     $speaker->save();
 
