@@ -6,7 +6,6 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-var logged_in = {% if logged_in %}true{% else %}false{% endif %};
 var updateList = function() {
   $.get({
     url: "/api/speakers",
@@ -20,11 +19,11 @@ var updateList = function() {
             '</td><td class="name_column">' + result[row].delegate.name +
             '</td><td class="group_column">' + result[row].delegate.group +
             '</td><td class="control_column">';
-        if (logged_in) {
+{% if logged_in %}
           html += '<a href="/edit/' + result[row].delegate.delegate +
               '">Ändra</a> | <a href="javascript:removeSpeaker(' +
               result[row].speaker + ')">Ta bort</a>';
-        }
+{% endif %}
         html += '</td></tr>';
       }
       $('#list > tbody').html(html);
@@ -33,12 +32,32 @@ var updateList = function() {
   setTimeout(updateList, 1000);
 };
 
+{% if logged_in %}
 var removeSpeaker = function(speaker) {
   $.ajax({
     method: "delete",
     url: "/api/speakers/" + speaker
   });
 };
+
+function addSpeaker() {
+  var speaker = {};
+  speaker.delegate = parseInt($('#nextSpeaker').val());
+
+  $.ajax({
+    method: "POST",
+    url: "/api/speakers",
+    data: JSON.stringify(speaker),
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }
+  })
+  .always(function() {
+      $('#nextSpeaker').val('');
+  });
+}
+{% endif %}
 
 $(function() {
   updateList();
@@ -47,6 +66,13 @@ $(function() {
   </head>
   <body>
     <h1>Talarlista</h1>
+{% if logged_in %}
+    <form id="new_speaker">
+      <label for="nextSpeaker">Nästa talare (delegatnummer): </label>
+      <input type="text" id="nextSpeaker" name="nextSpeaker">
+      <input type="button" id="submitButton" name="submitButton" value="Lägg till" onclick="addSpeaker()">
+    </form>
+{% endif %}
     <table id="list">
       <thead>
         <tr>

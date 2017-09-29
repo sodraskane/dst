@@ -1,13 +1,13 @@
 body {
 	font-family: Verdana;
 	margin-left: 10em;
+	font-size: 24px;
 }
 
-div#new_speaker {
-	font-size: 36px;
+form#new_speaker {
+	font-size: 24px;
 	font-family: Verdana;
-	margin-top: 30px;
-	margin-left: 30px;
+	margin-bottom: 1em;
 }
 
 #list th,
@@ -28,9 +28,5 @@ div#new_speaker {
 }
 
 input {
-	font-size: 36px;
-}
-
-th, td {
 	font-size: 24px;
 }
