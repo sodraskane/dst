@@ -14,7 +14,7 @@ var updateForm = function(delegate) {
     },
     success: function(result) {
 {% if logged_in %}
-      $('#delegate').val(result.id);
+      $('#delegate_id').val(result.id);
       $('#name').val(result.name);
       $('#group').val(result.group);
 {% else %}
@@ -29,7 +29,7 @@ var updateForm = function(delegate) {
 {% if logged_in %}
 var updateSpeaker = function() {
   var delegate = {};
-  delegate.delegate = $('#delegate').val();
+  delegate.id = $('#delegate_id').val();
   delegate.name = $('#name').val();
   delegate.group = $('#group').val();
 
@@ -59,7 +59,7 @@ $(function() {
     <h1>Förändra delegat</h1>
     <form id="details" name="details">
       <label for="delegate">Delegatnummer: </label>
-      <input type="text" id="delegate" name="delegate"><br>
+      <input type="text" id="delegate_id" name="delegate_id"><br>
       <label for="name">Namn: </label>
       <input type="text" id="name" name="name"><br>
       <label for="group">Scoutkår: </label>

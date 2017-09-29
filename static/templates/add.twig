@@ -4,46 +4,45 @@
     <title>Södra Skånes distriktsstämma</title>
     <link rel="stylesheet" href="/static/css/style.css" />
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+{% if logged_in %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-var updateList = function() {
-  $.get({
-    url: "/api/speakers",
+var addDelegate = function() {
+  var delegate = {};
+  delegate.name = $('#name').val();
+  delegate.group = $('#group').val();
+
+  $.ajax({
+    type: "post",
+    url: "/api/delegates",
+    data: JSON.stringify(delegate),
     headers: {
-        "Accept": "application/json"
+      "Accept": "application/json",
+      "Content-Type": "application/json"
     },
-    success: function(result) {
-        html = '';
-        for (row in result) {
-            html += '<tr><td class="id_column">' + result[row].id +
-                 '</td><td class="name_column">' + result[row].name +
-                 '</td><td class="group_column">' + result[row].group +
-                 '</td><td class="control_column"></td></tr>';
-        }
-        $('#list > tbody').html(html);
+    success: function(data) {
+      window.location = '/';
     }
   });
-  setTimeout(updateList, 1000);
 };
 
 $(function() {
-  updateList();
+  $('#updateButton').click(addDelegate);
 });
     </script>
+{% endif %}
   </head>
   <body>
-    <h1>Talarlista</h1>
-    <table id="list">
-      <thead>
-        <tr>
-          <th class="id_column">Delegat</th>
-          <th class="name_column">Namn</th>
-          <th class="group_column">Scoutkår</th>
-          <th class="control_column">&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+{% if logged_in %}
+    <h1>Lägg till delegat</h1>
+    <p><a href="/">Tillbaka till talarlistan</a></p>
+    <form id="details" name="details">
+      <label for="name">Namn: </label>
+      <input type="text" id="name" name="name"><br>
+      <label for="group">Scoutkår: </label>
+      <input type="text" id="group" name="group"><br>
+      <input type="button" id="updateButton" value="Lägg till delegat">
+    </form>
+{% endif %}
   </body>
 </html>

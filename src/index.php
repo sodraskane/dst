@@ -36,7 +36,11 @@ $app->get('/login', function (Request $request, Response $response) {
 
 // The add endpoint
 $app->get('/add', function (Request $request, Response $response) {
-    return $this->view->render($response, 'add.twig', []);
+    $logged_in = true;
+
+    return $this->view->render($response, 'add.twig', [
+                'logged_in' => $logged_in
+            ]);
 });
 
 // The edit endpoint
