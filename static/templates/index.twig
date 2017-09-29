@@ -22,14 +22,13 @@ var updateList = function() {
 {% if logged_in %}
           html += '<a href="/edit/' + result[row].delegate.id +
               '">Ändra</a> | <a href="javascript:removeSpeaker(' +
-              result[row].speaker + ')">Ta bort</a>';
+              result[row].id + ')">Ta bort</a>';
 {% endif %}
         html += '</td></tr>';
       }
       $('#list > tbody').html(html);
     }
   });
-  setTimeout(updateList, 1000);
 };
 
 {% if logged_in %}
@@ -61,6 +60,7 @@ function addSpeaker() {
 
 $(function() {
   updateList();
+  setInterval(updateList, 1000);
 });
     </script>
   </head>
@@ -72,6 +72,7 @@ $(function() {
       <input type="text" id="nextSpeaker" name="nextSpeaker">
       <input type="button" id="submitButton" name="submitButton" value="Lägg till" onclick="addSpeaker()">
     </form>
+    <a href="/edit">Visa delegater</a> | <a href="/add">Lägg till delegat</a>
 {% endif %}
     <table id="list">
       <thead>
