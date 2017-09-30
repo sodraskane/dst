@@ -23,11 +23,10 @@ $container['auth'] = function($container) {
     return $simpleAuth;
 };
 $app->add(function ($request, $response, $next) {
-	$this->get('auth')->authenticate($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
-	$response = $next($request, $response);
-//	$response->getBody()->write('AFTER');
+    $this->get('auth')->authenticate($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+    $response = $next($request, $response);
 
-	return $response;
+    return $response;
 });
 
 /*
@@ -44,7 +43,11 @@ $app->get('/', function (Request $request, Response $response) {
 
 // The login endpoint
 $app->get('/login', function (Request $request, Response $response) {
-    return $this->view->render($response, 'login.twig', []);
+    if (!$this->get('auth')->isLoggedIn()) {
+        return $response->withStatus(401)
+                ->withHeader('WWW-Authenticate', 'Basic realm="API and admin"');
+    }
+    return $response->withRedirect('/');
 });
 
 // The add endpoint

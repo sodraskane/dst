@@ -14,6 +14,11 @@ $app->get('/api/delegates', function (Request $request, Response $response) {
  * Add a delegate
  */
 $app->post('/api/delegates', function (Request $request, Response $response) {
+    if (!$this->get('auth')->isLoggedIn()) {
+        return $response->withStatus(401)
+                ->withHeader('WWW-Authenticate', 'Basic realm="API and admin"');
+    }
+
     $data = $request->getParsedBody();
     $delegate = new Delegate();
     $delegate->name = $data['name'];
@@ -43,6 +48,11 @@ $app->get('/api/delegates/{delegate}', function (Request $request, Response $res
  * Update a delegate
  */
 $app->put('/api/delegates/{delegate}', function (Request $request, Response $response, $args) {
+    if (!$this->get('auth')->isLoggedIn()) {
+        return $response->withStatus(401)
+                ->withHeader('WWW-Authenticate', 'Basic realm="API and admin"');
+    }
+
     $data = $request->getParsedBody();
     $delegate = Delegate::find($args['delegate']);
     if (!$delegate) {
@@ -61,6 +71,11 @@ $app->put('/api/delegates/{delegate}', function (Request $request, Response $res
  * Delete a delegate
  */
 $app->delete('/api/delegates/{delegate}', function (Request $request, Response $response, $args) {
+    if (!$this->get('auth')->isLoggedIn()) {
+        return $response->withStatus(401)
+                ->withHeader('WWW-Authenticate', 'Basic realm="API and admin"');
+    }
+
     $delegate = Delegate::find($args['delegate']);
     if ($delegate) {
          $delegate->delete();

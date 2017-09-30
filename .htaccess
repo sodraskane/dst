@@ -6,3 +6,8 @@ RewriteRule ^ index.php [QSA,L]
 <Limit GET POST PUT DELETE>
   Allow from all
 </Limit>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+</IfModule>

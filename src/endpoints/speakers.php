@@ -17,6 +17,11 @@ $app->get('/api/speakers', function (Request $request, Response $response) {
  * Add a speaker
  */
 $app->post('/api/speakers', function (Request $request, Response $response) {
+    if (!$this->get('auth')->isLoggedIn()) {
+        return $response->withStatus(401)
+                ->withHeader('WWW-Authenticate', 'Basic realm="API and admin"');
+    }
+
     $data = $request->getParsedBody();
     $speaker = new Speaker();
     $speaker->delegate = $data['delegate'];
@@ -46,6 +51,11 @@ $app->get('/api/speakers/{speaker}', function (Request $request, Response $respo
  * Update a speaker
  */
 $app->put('/api/speakers/{speaker}', function (Request $request, Response $response, $args) {
+    if (!$this->get('auth')->isLoggedIn()) {
+        return $response->withStatus(401)
+                ->withHeader('WWW-Authenticate', 'Basic realm="API and admin"');
+    }
+
     $data = $request->getParsedBody();
     $speaker = Speaker::find($args['speaker']);
     if (!$speaker) {
@@ -63,6 +73,11 @@ $app->put('/api/speakers/{speaker}', function (Request $request, Response $respo
  * Delete a speaker
  */
 $app->delete('/api/speakers/{speaker}', function (Request $request, Response $response, $args) {
+    if (!$this->get('auth')->isLoggedIn()) {
+        return $response->withStatus(401)
+                ->withHeader('WWW-Authenticate', 'Basic realm="API and admin"');
+    }
+
     $speaker = Speaker::find($args['speaker']);
     if ($speaker) {
          $speaker->delete();
