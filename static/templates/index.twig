@@ -59,6 +59,13 @@ function addSpeaker() {
 {% endif %}
 
 $(function() {
+  $('#new_speaker').keypress(function (e) {
+    code = e.keyCode ? e.keyCode : e.which;
+    if (code == 13) {
+      addSpeaker();
+      e.preventDefault();
+    }
+  });
   updateList();
   setInterval(updateList, 1000);
 });
