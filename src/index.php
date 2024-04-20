@@ -23,7 +23,9 @@ $container['auth'] = function($container) {
     return $simpleAuth;
 };
 $app->add(function ($request, $response, $next) {
-    $this->get('auth')->authenticate($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+    $authUser = $_SERVER['PHP_AUTH_USER'] ?? '';
+    $authPW = $_SERVER['PHP_AUTH_PW'] ?? '';
+    $this->get('auth')->authenticate($authUser, $authPW);
     $response = $next($request, $response);
 
     return $response;
